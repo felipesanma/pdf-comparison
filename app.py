@@ -118,7 +118,7 @@ with st.form("basic_form"):
                         question, st.session_state.qa_retrievals
                     )
                     data.extend(results)
-                st.write(data)
+                
                 st.session_state.data = data
 
             except Exception as e:
@@ -129,8 +129,7 @@ with st.form("basic_form"):
         with st.spinner("Doing Analysis.."):
             try:
                 df = pd.DataFrame(st.session_state.data)
-                st.table(df)
-                #st.table(df.pivot("query", "source_document", "response"))
+                
                 st.table(df.pivot(index="query", columns="source_document", values="response"))
 
             except Exception as e:
