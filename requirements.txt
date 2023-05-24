@@ -7,4 +7,3 @@ streamlit==1.22.0
 openai
 chromadb
 tiktoken
-detectron2-cdo
