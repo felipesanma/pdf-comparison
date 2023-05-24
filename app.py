@@ -62,7 +62,6 @@ Title_html = """
     """
 components.html(Title_html)
 
-
 with st.form("basic_form"):
 
     openai_api_key = st.text_input("OpenAI API Key", key="openai_api_key")
@@ -107,6 +106,7 @@ with st.form("basic_form"):
                 st.error("Something went grong...")
                 st.exception(e)
                 st.stop()
+        st.success("Done!", icon="✅")
         with st.spinner("Doing Analysis...."):
 
             try:
@@ -125,13 +125,19 @@ with st.form("basic_form"):
                 st.error("Something went grong...")
                 st.exception(e)
                 st.stop()
+        st.success("Done!", icon="✅")
         with st.spinner("Doing Analysis.."):
             try:
                 df = pd.DataFrame(st.session_state.data)
-                st.table(df.pivot("query", "source_document", "response"))
+                st.table(
+                    df.pivot(
+                        index="query", columns="source_document", values="response"
+                    )
+                )
 
             except Exception as e:
 
                 st.error("Something went grong...")
                 st.exception(e)
                 st.stop()
+        st.snow()
