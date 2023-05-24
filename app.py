@@ -118,7 +118,7 @@ with st.form("basic_form"):
                         question, st.session_state.qa_retrievals
                     )
                     data.extend(results)
-                
+                st.write(data)
                 st.session_state.data = data
 
             except Exception as e:
