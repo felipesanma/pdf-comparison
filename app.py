@@ -130,7 +130,8 @@ with st.form("basic_form"):
             try:
                 df = pd.DataFrame(st.session_state.data)
                 st.table(df)
-                st.table(df.pivot("query", "source_document", "response"))
+                #st.table(df.pivot("query", "source_document", "response"))
+                st.table(df.pivot(index="query", columns="source_document", values="response"))
 
             except Exception as e:
 
