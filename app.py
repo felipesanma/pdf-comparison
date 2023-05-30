@@ -76,7 +76,7 @@ with st.form("basic_form"):
     question_1 = st.text_input("Question 1", key="1_question")
     question_2 = st.text_input("Question 2", key="2_question")
     question_3 = st.text_input("Question 3", key="3_question")
-    # question_4 = st.text_input("Question 4", key="4_question")
+    question_4 = st.text_input("Question 4", key="4_question")
     # question_5 = st.text_input("Question 5", key="5_question")
 
     submit_btn = st.form_submit_button("Start Processing")
@@ -93,7 +93,12 @@ with st.form("basic_form"):
         if uploaded_files is None:
             st.warning("Upload at least 1 PDf file")
             st.stop()
-        all_questions = [question_1, question_2, question_3]  # question_4, question_5]
+        all_questions = [
+            question_1,
+            question_2,
+            question_3,
+            question_4,
+        ]  # , question_5]
         with st.spinner("Creating embeddings...."):
             try:
 

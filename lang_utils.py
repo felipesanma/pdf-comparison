@@ -39,7 +39,9 @@ def create_qa_retrievals(pdf_file_list: list, OPENAI_API_KEY):
         qa_tmp = RetrievalQA.from_chain_type(
             llm=OpenAI(openai_api_key=OPENAI_API_KEY),
             chain_type="stuff",
-            retriever=docsearch.as_retriever(),
+            retriever=docsearch.as_retriever(
+                search_type="similarity", search_kwargs={"k": 2}
+            ),
             return_source_documents=True,
         )
         qa_retrievals.append(qa_tmp)
