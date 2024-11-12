@@ -7,6 +7,9 @@ from langchain_community.embeddings import OpenAIEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
 from PyPDF2 import PdfReader
+__import__('pysqlite3')
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 
 
 
@@ -46,11 +49,10 @@ def create_qa_retrievals(pdf_file_list: list, OPENAI_API_KEY):
             return_source_documents=True,
         )
         qa_retrievals.append(qa_tmp)
-    print(qa_retrievals)
     return qa_retrievals
 
 
-def ask_to_all_pdfs_sources(query: str, qa_retrievals):
+def ask_to_all_pdfs_sources(query: str, qa_retrievals: list):
     responses = []
     progress_text = f"Asking '{query}' to all PDF's"
     total_retrievals = len(qa_retrievals)
@@ -62,8 +64,9 @@ def ask_to_all_pdfs_sources(query: str, qa_retrievals):
             "response": result["result"],
             "source_document": result["source_documents"][0].metadata["source"]
         }
+        print(count)
         print("RESULT")
-        print(result)
+        print(tmp_obj)
         print("************")
         responses.append(tmp_obj)
         percent_complete = (count + 1) * 100 / total_retrievals

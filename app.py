@@ -106,6 +106,8 @@ with st.form("basic_form"):
                     uploaded_files, openai_api_key
                 )
                 st.session_state.questions = all_questions
+                print(st.session_state.questions)
+                print(all_questions)
             except Exception as e:
 
                 st.error("Something went grong...")
@@ -122,8 +124,13 @@ with st.form("basic_form"):
                     results = ask_to_all_pdfs_sources(
                         question, st.session_state.qa_retrievals
                     )
+                    print(data)
                     data.extend(results)
+                
                 st.session_state.data = data
+                print(st.session_state.data)
+                print("****DATA****")
+                print(data)
 
             except Exception as e:
 
