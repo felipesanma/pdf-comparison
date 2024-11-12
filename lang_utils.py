@@ -1,12 +1,13 @@
 import streamlit as st
 from dotenv import load_dotenv
-from langchain import OpenAI
+from langchain_community.llms import OpenAI
 from langchain.chains import RetrievalQA, RetrievalQAWithSourcesChain
-from langchain.document_loaders import UnstructuredPDFLoader
-from langchain.embeddings.openai import OpenAIEmbeddings
+from langchain_community.document_loaders import UnstructuredPDFLoader
+from langchain_community.embeddings import OpenAIEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.vectorstores import Chroma
+from langchain_community.vectorstores import Chroma
 from PyPDF2 import PdfReader
+
 
 
 def get_text_splitter(pdf_file):
@@ -45,7 +46,7 @@ def create_qa_retrievals(pdf_file_list: list, OPENAI_API_KEY):
             return_source_documents=True,
         )
         qa_retrievals.append(qa_tmp)
-
+    print(qa_retrievals)
     return qa_retrievals
 
 
@@ -59,12 +60,14 @@ def ask_to_all_pdfs_sources(query: str, qa_retrievals):
         tmp_obj = {
             "query": query,
             "response": result["result"],
-            "source_document": result["source_documents"][0]
-            .metadata["source"]
-            .split("-")[1],
+            "source_document": result["source_documents"][0].metadata["source"]
         }
+        print("RESULT")
+        print(result)
+        print("************")
         responses.append(tmp_obj)
         percent_complete = (count + 1) * 100 / total_retrievals
         my_bar.progress(int(percent_complete), text=progress_text)
 
+    print(responses)
     return responses
